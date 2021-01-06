@@ -45,7 +45,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         holder.name.setText(userArrayList.get(position).getName());
         holder.userNameTextView.setText(userArrayList.get(position).getUsername());
         holder.email.setText(userArrayList.get(position).getEmail());
-
+        holder.phn.setText(userArrayList.get(position).getPhone());
+        holder.web.setText(userArrayList.get(position).getWebsite());
         String address = userArrayList.get(position).getAddress();
         String companyDetails = userArrayList.get(position).getCompany();
         setUpAddressAndCompanyDetails(holder, address, companyDetails);
@@ -136,7 +137,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView parent;
-        TextView userNameTextView, name, email, address, latLng, companyName, phrase, bs;
+        TextView userNameTextView, name, email, address, latLng, companyName, phrase, bs, web, phn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -149,6 +150,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             companyName = itemView.findViewById(R.id.company);
             phrase = itemView.findViewById(R.id.phrase);
             bs = itemView.findViewById(R.id.bm);
+            web = itemView.findViewById(R.id.web);
+            phn = itemView.findViewById(R.id.phone);
         }
     }
 }
