@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.androidassignment.R;
@@ -54,7 +55,11 @@ public class PhotosActivity extends AppCompatActivity {
         toolbarTextView.setText("PHOTO'S IN " + albumName);
 
         ApiCallManagers apiCallManagers = new ApiCallManagers(this);
-        apiCallManagers.getAlbumPhotos(albumId);
+        if (apiCallManagers.hasInternetAccess()) {
+            apiCallManagers.getAlbumPhotos(albumId);
+        } else {
+            Toast.makeText(this, "No internet", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void bindingViews() {

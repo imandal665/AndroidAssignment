@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.androidassignment.R;
 import com.example.androidassignment.adapters.AlbumAdapter;
@@ -44,7 +45,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         apiCallManagers = new ApiCallManagers(this);
-        apiCallManagers.getUsers();
+        if (apiCallManagers.hasInternetAccess())
+            apiCallManagers.getUsers();
+        else {
+            Toast.makeText(this, "No internet", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void bindingViews() {

@@ -1,6 +1,9 @@
 package com.example.androidassignment.managers;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,12 +25,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class ApiCallManagers {
     public static final String TAG = ApiCallManagers.class.getSimpleName();
     private Context context;
+    public static final String CURRENT_METHOD = "current_method";
 
     public ApiCallManagers(Context context) {
         this.context = context;
@@ -173,5 +178,40 @@ public class ApiCallManagers {
 
     }
 
+    public boolean hasInternetAccess() {
+        if (Build.FINGERPRINT.contains("generic")) {
 
+            return hasNetwork();
+
+        } else {
+            if (hasNetwork()) {
+
+                Runtime runtime = Runtime.getRuntime();
+                try {
+
+                    Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+                    int exitValue = ipProcess.waitFor();
+                    return (exitValue == 0);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
+    public Boolean hasNetwork() {
+        boolean result = false;
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            result = true;
+        }
+        return result;
+    }
 }

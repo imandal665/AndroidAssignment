@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.androidassignment.R;
 import com.example.androidassignment.adapters.AlbumAdapter;
@@ -48,7 +49,10 @@ public class AlbumsActivity extends AppCompatActivity {
         toolbarTitle.setText(name + "'s " + "ALBUM");
 
         ApiCallManagers managers = new ApiCallManagers(this);
-        managers.getUserAlbum(id);
+        if (managers.hasInternetAccess()){
+        managers.getUserAlbum(id);}else {
+            Toast.makeText(this, "No internet", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void bindingViews() {
